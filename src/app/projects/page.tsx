@@ -186,7 +186,7 @@ export default function Projects() {
               <ProjectName>{project.name}</ProjectName>
               <ProjectCategory>{project.tags.join(", ")}</ProjectCategory>
             </ProjectTitle>
-            <Video controls>
+            <Video key={project.videoUrl} controls>
               <source src={project.videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </Video>
