@@ -11,35 +11,48 @@ const projects = [
 ];
 
 const Section = styled.section`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: white;
-  padding: 4rem 2rem;
+  padding: 3rem 1.5rem;
   position: relative;
-  z-index: 1; /* Ensures it stays above the background */
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 const Title = styled(motion.h1)`
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
+  padding: 0 1rem;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ProjectCard = styled(motion.div)`
   background: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-radius: 12px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -57,8 +70,12 @@ const Video = styled.video`
 `;
 
 const ProjectTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-top: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export default function Projects() {
