@@ -7,7 +7,8 @@ import { motion } from "framer-motion";
 const projects = [
   { title: "Short Film - Arctic Dreams", videoUrl: "/hero-video.mp4" },
   { title: "Music Video - Echoes", videoUrl: "/hero-video.mp4" },
-  { title: "Documentary - Life in Shadows", videoUrl: "/hero-video.mp4" }
+  { title: "Documentary - Life in Shadows", videoUrl: "/hero-video.mp4" },
+  { title: "Indie Film - The Silent Path", videoUrl: "/hero-video.mp4" }
 ];
 
 const Section = styled.section`
@@ -16,70 +17,64 @@ const Section = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   color: white;
   padding: 4rem 2rem;
   position: relative;
   z-index: 1;
-  font-family: "Helvetica", Arial, sans-serif; /* Set font to Helvetica */
-
-  @media (max-width: 768px) {
-    padding: 3rem 1.5rem;
-  }
+  font-family: "Helvetica", Arial, sans-serif;
 `;
 
 const Title = styled(motion.h1)`
-  font-size: 4rem; /* Larger text */
+  font-size: 3rem;
   font-weight: bold;
-  margin-bottom: 3rem;
   text-transform: uppercase;
-
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
+  margin-bottom: 2rem;
+  text-align: center;
 `;
 
 const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
+  justify-content: center; /* Center the cards */
+  align-items: center;
   width: 100%;
   max-width: 1200px;
-  padding: 0 1.5rem;
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 const ProjectCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2rem;
+  position: relative;
+  max-width: 400px;
+  width: 100%;
   border-radius: 12px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
 
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.2);
+  &:hover h2 {
+    opacity: 0; /* Hide title on hover */
   }
 `;
 
 const Video = styled.video`
   width: 100%;
   height: auto;
-  border-radius: 8px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
 `;
 
-const ProjectTitle = styled.h2`
-  font-size: 2rem; /* Larger text */
-  margin-top: 1.5rem;
+const ProjectTitle = styled(motion.h2)`
+  font-size: 1.5rem;
   font-weight: bold;
-  letter-spacing: 1px;
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-  }
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: white;
+  z-index: 3;
+  transition: opacity 0.3s ease-in-out;
 `;
 
 export default function Projects() {
@@ -98,13 +93,13 @@ export default function Projects() {
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.3 }}
+            transition={{ duration: 0.8, delay: index * 0.2 }}
           >
+            <ProjectTitle>{project.title}</ProjectTitle>
             <Video controls>
               <source src={project.videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </Video>
-            <ProjectTitle>{project.title}</ProjectTitle>
           </ProjectCard>
         ))}
       </Grid>
