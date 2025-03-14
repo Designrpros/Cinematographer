@@ -60,17 +60,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     "/hero-video4.mp4",   // Fourth video (new one)
   ];
 
-  // State to track the current video index
+  // State to track the current and next video index
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [nextVideoIndex, setNextVideoIndex] = useState(1);
 
   // Reference to the video element
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const nextVideoRef = useRef<HTMLVideoElement | null>(null); // Reference for the hidden video
 
   // Handle video end event to switch to the next video in the playlist
   const handleVideoEnd = () => {
-    // Get the next video index, and loop back to the first one if it's the last video
     setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
+    setNextVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
   };
+
+  // Preload the next video
+  useEffect(() => {
+    if (nextVideoRef.current) {
+      nextVideoRef.current.load();
+    }
+  }, [nextVideoIndex]);
 
   // Set up event listener for video end
   useEffect(() => {
@@ -104,6 +113,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Video autoPlay muted ref={videoRef}>
             <source src={videoPlaylist[currentVideoIndex]} type="video/mp4" />
           </Video>
+
+          {/* Preload the next video */}
+          <video ref={nextVideoRef} muted style={{ display: "none" }}>
+            <source src={videoPlaylist[nextVideoIndex]} type="video/mp4" />
+          </video>
         </HeroSection>
         <Toolbar activeTab={activeTab} onTabChange={() => {}} />
         {children}
