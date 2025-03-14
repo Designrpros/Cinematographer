@@ -1,15 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-// Video playlist with names and video URLs
+// Video playlist with names, video URLs, and tags
 const videoPlaylist = [
-  { name: "Short Film - Arctic Dreams", videoUrl: "/hero-video.mp4" },
-  { name: "Music Video - Echoes", videoUrl: "/hero-video2.mp4" },
-  { name: "Documentary - Life in Shadows", videoUrl: "/hero-video3.mp4" },
-  { name: "Indie Film - The Silent Path", videoUrl: "/hero-video4.mp4" }
+  { name: "Short Film - Arctic Dreams", videoUrl: "/hero-video.mp4", tags: ["Film", "Adventure"] },
+  { name: "Music Video - Echoes", videoUrl: "/hero-video2.mp4", tags: ["Music", "Art"] },
+  { name: "Documentary - Life in Shadows", videoUrl: "/hero-video3.mp4", tags: ["Documentary", "Life"] },
+  { name: "Indie Film - The Silent Path", videoUrl: "/hero-video4.mp4", tags: ["Film", "Drama"] },
 ];
 
 const Section = styled.section`
@@ -33,6 +33,28 @@ const Title = styled(motion.h1)`
   text-align: center;
 `;
 
+const FilterContainer = styled.div`
+  margin-bottom: 2rem;
+  text-align: center;
+`;
+
+const FilterButton = styled.button<{ isActive: boolean }>`
+  background-color: ${(props) => (props.isActive ? "#FFF" : "transparent")};
+  color: ${(props) => (props.isActive ? "black" : "#FFF")};
+  border: 1px solid #FFF;
+  padding: 8px 16px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  
+  &:hover {
+    background-color: #FFF; 
+    color: black;
+  }
+`;
+
 const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -41,6 +63,11 @@ const Grid = styled.div`
   align-items: center;
   width: 100%;
   max-width: 1200px;
+  flex-direction: column; /* Default to vertical stacking */
+  
+  @media (min-width: 768px) {
+    flex-direction: row; /* Switch to horizontal layout on larger screens */
+  }
 `;
 
 const ProjectCard = styled(motion.div)`
@@ -54,6 +81,10 @@ const ProjectCard = styled(motion.div)`
   &:hover h2 {
     opacity: 0; /* Hide title on hover */
   }
+
+  @media (min-width: 768px) {
+    max-width: 45%; /* Allow 2 items per row on larger screens */
+  }
 `;
 
 const Video = styled.video`
@@ -64,7 +95,7 @@ const Video = styled.video`
   display: block;
 `;
 
-const ProjectTitle = styled(motion.h2)`
+const ProjectTitle = styled(motion.div)`
   font-size: 1.5rem;
   font-weight: bold;
   position: absolute;
@@ -76,9 +107,38 @@ const ProjectTitle = styled(motion.h2)`
   color: white;
   z-index: 3;
   transition: opacity 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column; /* Stack title and category */
+`;
+
+const ProjectName = styled.span`
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
+
+const ProjectCategory = styled.span`
+  font-size: 1rem;
+  font-weight: normal;
 `;
 
 export default function Projects() {
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
+  // Handle filtering based on selected tag
+  const handleFilterClick = (tag: string) => {
+    setSelectedTag(tag === selectedTag ? null : tag); // Toggle filter
+  };
+
+  // Filter the videos based on the selected tag
+  const filteredVideos = selectedTag
+    ? videoPlaylist.filter((project) => project.tags.includes(selectedTag))
+    : videoPlaylist;
+
+  // Get unique tags from the playlist
+  const uniqueTags = [
+    ...new Set(videoPlaylist.flatMap((project) => project.tags)),
+  ];
+
   return (
     <Section>
       <Title
@@ -88,15 +148,32 @@ export default function Projects() {
       >
         Projects
       </Title>
+
+      {/* Filter buttons */}
+      <FilterContainer>
+        {uniqueTags.map((tag) => (
+          <FilterButton
+            key={tag}
+            isActive={selectedTag === tag}
+            onClick={() => handleFilterClick(tag)}
+          >
+            {tag}
+          </FilterButton>
+        ))}
+      </FilterContainer>
+
       <Grid>
-        {videoPlaylist.map((project, index) => (
+        {filteredVideos.map((project, index) => (
           <ProjectCard
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: index * 0.2 }}
           >
-            <ProjectTitle>{project.name}</ProjectTitle>
+            <ProjectTitle>
+              <ProjectName>{project.name}</ProjectName>
+              <ProjectCategory>{project.tags.join(", ")}</ProjectCategory>
+            </ProjectTitle>
             <Video controls>
               <source src={project.videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
