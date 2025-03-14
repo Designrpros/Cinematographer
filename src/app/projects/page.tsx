@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 
 // Video playlist with names, video URLs, and tags
 const videoPlaylist = [
-  { name: "Short Film - Arctic Dreams", videoUrl: "/hero-video.mp4", tags: ["Film", "Adventure"] },
-  { name: "Music Video - Echoes", videoUrl: "/hero-video2.mp4", tags: ["Music", "Art"] },
-  { name: "Documentary - Life in Shadows", videoUrl: "/hero-video3.mp4", tags: ["Documentary", "Life"] },
-  { name: "Indie Film - The Silent Path", videoUrl: "/hero-video4.mp4", tags: ["Film", "Drama"] },
+  { name: "Arctic Dreams", videoUrl: "/hero-video.mp4", tags: ["Film", "Adventure"] },
+  { name: "Echoes", videoUrl: "/hero-video2.mp4", tags: ["Music", "Art"] },
+  { name: "Life in Shadows", videoUrl: "/hero-video3.mp4", tags: ["Documentary", "Life"] },
+  { name: "The Silent Path", videoUrl: "/hero-video4.mp4", tags: ["Film", "Drama"] },
 ];
 
 const Section = styled.section`
