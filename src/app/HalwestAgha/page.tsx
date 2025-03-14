@@ -4,18 +4,19 @@ import React from "react";
 import Head from "next/head";
 import styled, { createGlobalStyle } from "styled-components";
 
-// Global styles: set font & reset defaults
+// Global styles
 const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
     height: 100%;
-    font-family: "Helvetica", Arial, sans-serif; /* Apply Helvetica globally */
+    font-family: "Helvetica", Arial, sans-serif;
     color: white;
   }
 `;
 
+// Video background section
 const HeroSection = styled.section`
   position: fixed;
   top: 0;
@@ -25,7 +26,7 @@ const HeroSection = styled.section`
   overflow: hidden;
   margin: 0;
   padding: 0;
-  z-index: -1; /* Ensure it's behind other content */
+  z-index: -1;
 `;
 
 const Video = styled.video`
@@ -39,6 +40,7 @@ const Video = styled.video`
   padding: 0;
 `;
 
+// Overlay for text content with shared background frame
 const Overlay = styled.div`
   position: absolute;
   top: 0;
@@ -50,6 +52,13 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+`;
+
+const TextFrame = styled.div`
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px 30px;
+  border-radius: 10px;
+  display: inline-block;
 `;
 
 const Title = styled.h1`
@@ -66,7 +75,7 @@ const Title = styled.h1`
 
 const Subtitle = styled.p`
   font-size: 1.5rem;
-  margin-top: 1rem;
+  margin-top: 10px;
   font-weight: 300;
 
   @media (max-width: 768px) {
@@ -81,14 +90,16 @@ const HalwestAgha = () => {
         <title>Halwest Agha | Cinematographer</title>
         <meta name="description" content="Portfolio of cinematographer Halwest Agha" />
       </Head>
-      <GlobalStyle />  {/* Apply global reset & font */}
+      <GlobalStyle />
       <HeroSection>
         <Video autoPlay loop muted>
           <source src="/hero-video.mp4" type="video/mp4" />
         </Video>
         <Overlay>
-          <Title>Halwest Agha</Title>
-          <Subtitle>Cinematographer | Visual Storyteller</Subtitle>
+          <TextFrame>
+            <Title>Halwest Agha</Title>
+            <Subtitle>Cinematographer | Visual Storyteller</Subtitle>
+          </TextFrame>
         </Overlay>
       </HeroSection>
     </>
