@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
@@ -31,11 +31,17 @@ const Title = styled(motion.h1)`
   text-transform: uppercase;
   margin-bottom: 2rem;
   text-align: center;
-`;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px;
+  border-radius: 5px;
+  `;
 
 const FilterContainer = styled.div`
   margin-bottom: 2rem;
   text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px;
+  border-radius: 5px;
 `;
 
 const FilterButton = styled.button<{ isActive: boolean }>`
@@ -122,19 +128,25 @@ const ProjectCategory = styled.span`
 `;
 
 export default function Projects() {
+  const [isClient, setIsClient] = useState(false);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
-  // Handle filtering based on selected tag
+  useEffect(() => {
+    setIsClient(true); // Set the flag after the component mounts
+  }, []);
+
+  if (!isClient) {
+    return null; // Return null to render nothing on the server-side
+  }
+
   const handleFilterClick = (tag: string) => {
     setSelectedTag(tag === selectedTag ? null : tag); // Toggle filter
   };
 
-  // Filter the videos based on the selected tag
   const filteredVideos = selectedTag
     ? videoPlaylist.filter((project) => project.tags.includes(selectedTag))
     : videoPlaylist;
 
-  // Get unique tags from the playlist
   const uniqueTags = [
     ...new Set(videoPlaylist.flatMap((project) => project.tags)),
   ];
