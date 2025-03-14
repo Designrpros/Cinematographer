@@ -4,11 +4,12 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-const projects = [
-  { title: "Short Film - Arctic Dreams", videoUrl: "/hero-video.mp4" },
-  { title: "Music Video - Echoes", videoUrl: "/hero-video.mp4" },
-  { title: "Documentary - Life in Shadows", videoUrl: "/hero-video.mp4" },
-  { title: "Indie Film - The Silent Path", videoUrl: "/hero-video.mp4" }
+// Video playlist with names and video URLs
+const videoPlaylist = [
+  { name: "Short Film - Arctic Dreams", videoUrl: "/hero-video.mp4" },
+  { name: "Music Video - Echoes", videoUrl: "/hero-video2.mp4" },
+  { name: "Documentary - Life in Shadows", videoUrl: "/hero-video3.mp4" },
+  { name: "Indie Film - The Silent Path", videoUrl: "/hero-video4.mp4" }
 ];
 
 const Section = styled.section`
@@ -88,14 +89,14 @@ export default function Projects() {
         Projects
       </Title>
       <Grid>
-        {projects.map((project, index) => (
+        {videoPlaylist.map((project, index) => (
           <ProjectCard
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: index * 0.2 }}
           >
-            <ProjectTitle>{project.title}</ProjectTitle>
+            <ProjectTitle>{project.name}</ProjectTitle>
             <Video controls>
               <source src={project.videoUrl} type="video/mp4" />
               Your browser does not support the video tag.

@@ -16,30 +16,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// Video background section
-const HeroSection = styled.section`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  z-index: -1;
-`;
-
-const Video = styled.video`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  margin: 0;
-  padding: 0;
-`;
-
 // Overlay for text content with shared background frame
 const Overlay = styled.div`
   position: absolute;
@@ -91,17 +67,12 @@ const HalwestAgha = () => {
         <meta name="description" content="Portfolio of cinematographer Halwest Agha" />
       </Head>
       <GlobalStyle />
-      <HeroSection>
-        <Video autoPlay loop muted>
-          <source src="/hero-video.mp4" type="video/mp4" />
-        </Video>
-        <Overlay>
-          <TextFrame>
-            <Title>Halwest Agha</Title>
-            <Subtitle>Cinematographer | Visual Storyteller</Subtitle>
-          </TextFrame>
-        </Overlay>
-      </HeroSection>
+      <Overlay>
+        <TextFrame>
+          <Title>Halwest Agha</Title>
+          <Subtitle>Cinematographer | Visual Storyteller</Subtitle>
+        </TextFrame>
+      </Overlay>
     </>
   );
 };
