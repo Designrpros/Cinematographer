@@ -43,6 +43,7 @@ const Video = styled.video<VideoProps>`
   object-fit: cover;
   opacity: ${(props) => props.opacity};
   transition: opacity 0.5s ease-in-out;
+  z-index: ${(props) => (props.opacity === 1 ? 1 : 0)}; /* Ensure current video is on top */
 `;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -62,8 +63,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   // List of video sources
   const videoPlaylist = [
-    "/hero-video2.mp4",
     "/hero-video.mp4",
+    "/hero-video2.mp4",
     "/hero-video3.mp4",
     "/hero-video4.mp4",
   ];
@@ -79,9 +80,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   // Handle video end event to switch to the next video in the playlist
   const handleVideoEnd = () => {
-    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
-    setNextVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
     setOpacity(0); // Start fading out the current video
+    setTimeout(() => {
+      // After the fade-out, change the video index and preload the next video
+      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
+      setNextVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
+      setOpacity(1); // Fade in the next video
+    }, 500); // Match the fade-out duration (500ms)
   };
 
   // Preload the next video
@@ -109,7 +114,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // Play the next video when the current video index changes
   useEffect(() => {
     if (videoRef.current) {
-      setOpacity(1); // Start fading in the new video
       videoRef.current.load(); // Ensure the new video source is loaded
       videoRef.current.play(); // Play the new video
     }
