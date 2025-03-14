@@ -4,11 +4,13 @@ import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Layout from "./layout";
 import Toolbar from "./components/Toolbar";
+import HalwestAgha from "./HalwestAgha/page";
+import Projects from "./projects/page";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState<string>("Home");
   const pathname = usePathname();
-  const router = useRouter(); // Only use if necessary
+  const router = useRouter();
 
   useEffect(() => {
     switch (pathname) {
@@ -17,9 +19,6 @@ const Home = () => {
         break;
       case "/projects":
         setActiveTab("Projects");
-        break;
-      case "/philosophy":
-        setActiveTab("Philosophy");
         break;
       default:
         setActiveTab("Home");
@@ -32,9 +31,24 @@ const Home = () => {
     router.push(tab === "Home" ? "/" : `/${tab.toLowerCase()}`);
   };
 
+  // Dynamically render the correct content
+  let Content;
+  switch (activeTab) {
+    case "Home":
+      Content = <HalwestAgha />;
+      break;
+    case "Projects":
+      Content = <Projects />;
+      break;
+    default:
+      Content = <HalwestAgha />;
+      break;
+  }
+
   return (
     <Layout>
       <Toolbar activeTab={activeTab} onTabChange={handleTabChange} />
+      {Content} {/* Show the correct page */}
     </Layout>
   );
 };
