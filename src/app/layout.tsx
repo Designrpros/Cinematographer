@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+// Define a custom interface for the Video props
+interface VideoProps {
+  opacity: number;
+}
+
 // Hero section styled with the video background
 const HeroSection = styled.section`
   position: fixed;
@@ -28,13 +33,16 @@ const HeroSection = styled.section`
   z-index: -1; /* Keep it behind other content */
 `;
 
-const Video = styled.video`
+// Update the Video styled component to accept opacity as a prop
+const Video = styled.video<VideoProps>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: ${(props) => props.opacity};
+  transition: opacity 0.5s ease-in-out;
 `;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -54,17 +62,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   // List of video sources
   const videoPlaylist = [
-    "/hero-video.mp4",    // First video
-    "/hero-video2.mp4",   // Second video
-    "/hero-video3.mp4",   // Third video
-    "/hero-video4.mp4",   // Fourth video (new one)
+    "/hero-video2.mp4",
+    "/hero-video.mp4",
+    "/hero-video3.mp4",
+    "/hero-video4.mp4",
   ];
 
   // State to track the current and next video index
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [nextVideoIndex, setNextVideoIndex] = useState(1);
+  const [opacity, setOpacity] = useState(1); // Controls the fade-in/out effect
 
-  // Reference to the video element
+  // Reference to the video elements
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const nextVideoRef = useRef<HTMLVideoElement | null>(null); // Reference for the hidden video
 
@@ -72,6 +81,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const handleVideoEnd = () => {
     setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
     setNextVideoIndex((prevIndex) => (prevIndex + 1) % videoPlaylist.length);
+    setOpacity(0); // Start fading out the current video
   };
 
   // Preload the next video
@@ -99,6 +109,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   // Play the next video when the current video index changes
   useEffect(() => {
     if (videoRef.current) {
+      setOpacity(1); // Start fading in the new video
       videoRef.current.load(); // Ensure the new video source is loaded
       videoRef.current.play(); // Play the new video
     }
@@ -110,7 +121,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <GlobalStyle />
         <HeroSection>
-          <Video autoPlay muted ref={videoRef}>
+          {/* Current video */}
+          <Video autoPlay muted ref={videoRef} opacity={opacity}>
             <source src={videoPlaylist[currentVideoIndex]} type="video/mp4" />
           </Video>
 
