@@ -18,41 +18,43 @@ const Section = styled.section`
   justify-content: center;
   text-align: center;
   color: white;
-  padding: 3rem 1.5rem;
+  padding: 4rem 2rem;
   position: relative;
   z-index: 1;
+  font-family: "Helvetica", Arial, sans-serif; /* Set font to Helvetica */
 
   @media (max-width: 768px) {
-    padding: 2rem 1rem;
+    padding: 3rem 1.5rem;
   }
 `;
 
 const Title = styled(motion.h1)`
-  font-size: 3rem;
+  font-size: 4rem; /* Larger text */
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
 
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 `;
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
   width: 100%;
-  max-width: 1000px;
-  padding: 0 1rem;
+  max-width: 1200px;
+  padding: 0 1.5rem;
 
-  @media (max-width: 480px) {
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
   }
 `;
 
 const ProjectCard = styled(motion.div)`
   background: rgba(255, 255, 255, 0.1);
-  padding: 1.2rem;
+  padding: 2rem;
   border-radius: 12px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -70,11 +72,13 @@ const Video = styled.video`
 `;
 
 const ProjectTitle = styled.h2`
-  font-size: 1.3rem;
-  margin-top: 1rem;
+  font-size: 2rem; /* Larger text */
+  margin-top: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
 
   @media (max-width: 768px) {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
   }
 `;
 

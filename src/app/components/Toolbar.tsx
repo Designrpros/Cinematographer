@@ -6,7 +6,7 @@ import Link from "next/link";
 
 interface ToolbarProps {
   activeTab: string;
-  onTabChange?: (tab: string) => void; // Make it optional with "?"
+  onTabChange?: (tab: string) => void;
 }
 
 const Navbar = styled.nav`
@@ -19,7 +19,7 @@ const Navbar = styled.nav`
 const BurgerIcon = styled.div<{ isOpen: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
   cursor: pointer;
   padding: 10px;
   position: absolute;
@@ -28,7 +28,7 @@ const BurgerIcon = styled.div<{ isOpen: boolean }>`
   z-index: 51;
 
   div {
-    width: 30px;
+    width: 35px;
     height: 4px;
     background-color: white;
     border-radius: 2px;
@@ -58,29 +58,36 @@ const Menu = styled.div<{ isMenuOpen: boolean }>`
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
   z-index: 50;
-  animation: slideIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 
-  @keyframes slideIn {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(0); }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 `;
 
 const MenuItem = styled.a<{ $isActive: boolean }>`
-  font-size: 28px;
-  font-weight: 600;
+  font-family: "Helvetica", Arial, sans-serif;
+  font-size: 32px;
+  font-weight: bold;
   color: ${({ $isActive }) => ($isActive ? "#FFDD00" : "#fff")};
   text-transform: uppercase;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.2s ease;
-  padding: 10px;
+  padding: 12px;
   letter-spacing: 1.5px;
+  text-decoration: none; /* Remove underline */
 
   &:hover {
     color: #ffdd00;
     transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 24px;
   }
 `;
 
@@ -93,9 +100,9 @@ const Toolbar: React.FC<ToolbarProps> = ({ activeTab, onTabChange }) => {
 
   const handleTabClick = (tab: string) => {
     if (onTabChange) {
-      onTabChange(tab); // Only call if provided
+      onTabChange(tab);
     }
-    setIsMenuOpen(false); // Close the menu
+    setIsMenuOpen(false);
   };
 
   return (
@@ -114,12 +121,12 @@ const Toolbar: React.FC<ToolbarProps> = ({ activeTab, onTabChange }) => {
           <div />
           <div />
         </BurgerIcon>
-        <Link href="/" passHref>
+        <Link href="/" passHref legacyBehavior>
           <MenuItem $isActive={activeTab === "Home"} onClick={() => handleTabClick("Home")}>
             Home
           </MenuItem>
         </Link>
-        <Link href="/projects" passHref>
+        <Link href="/projects" passHref legacyBehavior>
           <MenuItem
             $isActive={activeTab === "Projects"}
             onClick={() => handleTabClick("Projects")}

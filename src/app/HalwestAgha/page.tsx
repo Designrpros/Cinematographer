@@ -4,13 +4,15 @@ import React from "react";
 import Head from "next/head";
 import styled, { createGlobalStyle } from "styled-components";
 
-// Global reset to ensure no default margins/padding
+// Global styles: set font & reset defaults
 const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
     height: 100%;
+    font-family: "Helvetica", Arial, sans-serif; /* Apply Helvetica globally */
+    color: white;
   }
 `;
 
@@ -47,14 +49,14 @@ const Overlay = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white;
   text-align: center;
 `;
 
 const Title = styled.h1`
   font-size: 5rem;
   font-weight: bold;
-  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   margin: 0;
 
   @media (max-width: 768px) {
@@ -63,11 +65,12 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.p`
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-top: 1rem;
+  font-weight: 300;
 
   @media (max-width: 768px) {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 `;
 
@@ -78,7 +81,7 @@ const HalwestAgha = () => {
         <title>Halwest Agha | Cinematographer</title>
         <meta name="description" content="Portfolio of cinematographer Halwest Agha" />
       </Head>
-      <GlobalStyle />  {/* Apply global reset */}
+      <GlobalStyle />  {/* Apply global reset & font */}
       <HeroSection>
         <Video autoPlay loop muted>
           <source src="/hero-video.mp4" type="video/mp4" />
