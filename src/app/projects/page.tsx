@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-// Video playlist with names, video URLs, and tags
 const videoPlaylist = [
   { name: "Arctic Dreams", videoUrl: "/hero-video.mp4", tags: ["Film", "Adventure"] },
   { name: "Echoes", videoUrl: "/hero-video2.mp4", tags: ["Music", "Art"] },
@@ -34,12 +33,12 @@ const Title = styled(motion.h1)`
   background: rgba(0, 0, 0, 0.6);
   padding: 8px 12px;
   border-radius: 5px;
-  `;
+`;
 
 const FilterContainer = styled.div`
   margin-bottom: 2rem;
   text-align: center;
-    background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
   padding: 8px 12px;
   border-radius: 5px;
 `;
@@ -56,7 +55,7 @@ const FilterButton = styled.button<{ isActive: boolean }>`
   transition: background-color 0.3s, color 0.3s;
   
   &:hover {
-    background-color: #FFF; 
+    background-color: #FFF;
     color: black;
   }
 `;
@@ -65,14 +64,14 @@ const Grid = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  justify-content: center; /* Center the cards */
+  justify-content: center;
   align-items: center;
   width: 100%;
   max-width: 1200px;
-  flex-direction: column; /* Default to vertical stacking */
+  flex-direction: column;
   
   @media (min-width: 768px) {
-    flex-direction: row; /* Switch to horizontal layout on larger screens */
+    flex-direction: row;
   }
 `;
 
@@ -85,11 +84,11 @@ const ProjectCard = styled(motion.div)`
   cursor: pointer;
 
   &:hover h2 {
-    opacity: 0; /* Hide title on hover */
+    opacity: 0;
   }
 
   @media (min-width: 768px) {
-    max-width: 45%; /* Allow 2 items per row on larger screens */
+    max-width: 45%;
   }
 `;
 
@@ -114,7 +113,7 @@ const ProjectTitle = styled(motion.div)`
   z-index: 3;
   transition: opacity 0.3s ease-in-out;
   display: flex;
-  flex-direction: column; /* Stack title and category */
+  flex-direction: column;
 `;
 
 const ProjectName = styled.span`
@@ -132,15 +131,15 @@ export default function Projects() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsClient(true); // Set the flag after the component mounts
+    setIsClient(true);
   }, []);
 
   if (!isClient) {
-    return null; // Return null to render nothing on the server-side
+    return null;
   }
 
   const handleFilterClick = (tag: string) => {
-    setSelectedTag(tag === selectedTag ? null : tag); // Toggle filter
+    setSelectedTag(tag === selectedTag ? null : tag);
   };
 
   const filteredVideos = selectedTag
@@ -160,8 +159,6 @@ export default function Projects() {
       >
         Projects
       </Title>
-
-      {/* Filter buttons */}
       <FilterContainer>
         {uniqueTags.map((tag) => (
           <FilterButton
@@ -173,7 +170,6 @@ export default function Projects() {
           </FilterButton>
         ))}
       </FilterContainer>
-
       <Grid>
         {filteredVideos.map((project, index) => (
           <ProjectCard

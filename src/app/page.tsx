@@ -13,17 +13,7 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    switch (pathname) {
-      case "/":
-        setActiveTab("Home");
-        break;
-      case "/projects":
-        setActiveTab("Projects");
-        break;
-      default:
-        setActiveTab("Home");
-        break;
-    }
+    setActiveTab(pathname === "/" ? "Home" : pathname === "/projects" ? "Projects" : "Home");
   }, [pathname]);
 
   const handleTabChange = (tab: string) => {
@@ -31,24 +21,12 @@ const Home = () => {
     router.push(tab === "Home" ? "/" : `/${tab.toLowerCase()}`);
   };
 
-  // Dynamically render the correct content
-  let Content;
-  switch (activeTab) {
-    case "Home":
-      Content = <HalwestAgha />;
-      break;
-    case "Projects":
-      Content = <Projects />;
-      break;
-    default:
-      Content = <HalwestAgha />;
-      break;
-  }
+  const Content = activeTab === "Projects" ? <Projects /> : <HalwestAgha />;
 
   return (
     <Layout>
       <Toolbar activeTab={activeTab} onTabChange={handleTabChange} />
-      {Content} {/* Show the correct page */}
+      {Content}
     </Layout>
   );
 };

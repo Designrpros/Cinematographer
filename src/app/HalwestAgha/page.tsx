@@ -3,8 +3,9 @@
 import React from "react";
 import Head from "next/head";
 import styled, { createGlobalStyle } from "styled-components";
+import { motion } from "framer-motion";
 
-// Global styles
+// Global styles (unchanged)
 const GlobalStyle = createGlobalStyle`
   body, html {
     margin: 0;
@@ -16,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// Overlay for text content with shared background frame
+// Overlay for text content
 const Overlay = styled.div`
   position: absolute;
   top: 0;
@@ -28,8 +29,11 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  z-index: 2; /* Above the Layout video */
+  padding: 2rem;
 `;
 
+// Text container
 const TextFrame = styled.div`
   background: rgba(0, 0, 0, 0.6);
   padding: 20px 30px;
@@ -37,7 +41,7 @@ const TextFrame = styled.div`
   display: inline-block;
 `;
 
-const Title = styled.h1`
+const Title = styled(motion.h1)`
   font-size: 5rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -49,7 +53,7 @@ const Title = styled.h1`
   }
 `;
 
-const Subtitle = styled.p`
+const Subtitle = styled(motion.p)`
   font-size: 1.5rem;
   margin-top: 10px;
   font-weight: 300;
@@ -67,10 +71,23 @@ const HalwestAgha = () => {
         <meta name="description" content="Portfolio of cinematographer Halwest Agha" />
       </Head>
       <GlobalStyle />
+      {/* Overlay with Text */}
       <Overlay>
         <TextFrame>
-          <Title>Halwest Agha</Title>
-          <Subtitle>Cinematographer | Visual Storyteller</Subtitle>
+          <Title
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            Halwest Agha
+          </Title>
+          <Subtitle
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          >
+            Cinematographer | Visual Storyteller
+          </Subtitle>
         </TextFrame>
       </Overlay>
     </>
